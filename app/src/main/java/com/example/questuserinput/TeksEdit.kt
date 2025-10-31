@@ -1,92 +1,111 @@
-package com.example.questuserinput
+package com.example.questuserinput  // ubah sesuai manifest
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.selection.selectable
-import androidx.compose.material3.Button
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.RadioButton
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
-import androidx.compose.ui.text.TextRange
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import org.w3c.dom.Text
+import com.example.questuserinput.R // pastikan ini sesuai
 
 @Composable
-fun FormDataDiri(modifier: Modifier
-){
-    var textName by remember {mutableStateOf( value = "")}
-    var textAlamat by remember {mutableStateOf( value = "")}
-    var textJK by remember {mutableStateOf( value = "")}
+fun FormDataDiri(modifier: Modifier = Modifier) {
+    var textNama by remember { mutableStateOf("") }
+    var textAlamat by remember { mutableStateOf("") }
+    var textJK by remember { mutableStateOf("") }
 
-    var nama by remember {mutableStateOf( value = "")}
-    var alamat by remember {mutableStateOf( value = "")}
-    var jenis by remember {mutableStateOf( value = "")}
+    var nama by remember { mutableStateOf("") }
+    var alamat by remember { mutableStateOf("") }
+    var jenis by remember { mutableStateOf("") }
 
-    val gender:List<String> =listOf("Laki-Laki","Perempuan")
+    val gender = listOf("Laki-laki", "Perempuan")
 
-    Column(modifier = Modifier.padding(top = 50.dp),
+    Column(
+        modifier = modifier.padding(top = 50.dp),
         verticalArrangement = Arrangement.Top,
-        horizontalAlignment = Alignment.CenterHorizontally) {
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
         OutlinedTextField(
-            value = textName,
+            value = textNama,
             singleLine = true,
             shape = MaterialTheme.shapes.large,
-            modifier = Modifier.width( width = 250.dp),
-            label = { Text(text = "Nama Lengkap") },
-            enValueChange = {
-                textName = it
-            }
+            modifier = Modifier.width(250.dp),
+            label = { Text("Nama Lengkap") },
+            onValueChange = { textNama = it }
         )
+
         Row {
             gender.forEach { item ->
-                Row(modifier = Modifier.selectable(
-                    selected = textJK == item,
-                    onClick = { textJK = item }
-                ), verticalAlignment = Alignment.CenterHorizontally) {
+                Row(
+                    modifier = Modifier.selectable(
+                        selected = textJK == item,
+                        onClick = { textJK = item }
+                    ),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
                     RadioButton(
                         selected = textJK == item,
-                        onClick = {
-                            textJK = item
-                        })
-                    Text(text = item)
+                        onClick = { textJK = item }
+                    )
+                    Text(item)
                 }
             }
         }
+
         OutlinedTextField(
             value = textAlamat,
             singleLine = true,
-            modifier = Modifier.width( width = 250.dp),
-            label = { Text(text = "Alamat Lengkap") },
-            onValueChange = {
-                val it = null
-                textAlamat = it
-            }
+            modifier = Modifier.width(250.dp),
+            label = { Text("Alamat Lengkap") },
+            onValueChange = { textAlamat = it }
         )
-        Devider(
-            modifier = Modifier.padding(bottom = dimensionResource(id=R.dimen.padding_medium), top = dimensionResource(
-                id = R.dimen.padding_medium
-            )),
-            thickness = dimensionResource(id = R.dimen.divider_tipis),
+
+        HorizontalDivider(
+            modifier = Modifier.padding(
+                bottom = dimensionResource(R.dimen.padding_medium),
+                top = dimensionResource(R.dimen.padding_medium)
+            ),
+            thickness = dimensionResource(R.dimen.divider_tipis),
             color = Color.DarkGray
         )
+
         Button(
-        modifier = Modifier.fillMaxWidth( fraction = 1f),
+            modifier = Modifier.fillMaxWidth(1f),
             enabled = textAlamat.isNotEmpty(),
             onClick = {
-                nama=textNama
-                jenis=textJK
-                alamat=textAlamat
+                nama = textNama
+                jenis = textJK
+                alamat = textAlamat
             }
         ) {
+            Text(stringResource(R.string.submit))
+        }
+
+        HorizontalDivider(
+            modifier = Modifier.padding(
+                bottom = dimensionResource(R.dimen.padding_medium),
+                top = dimensionResource(R.dimen.padding_medium)
+            ),
+            thickness = dimensionResource(R.dimen.divider_tipis),
+            color = Color.DarkGray
+        )
+
+        ElevatedCard (
+            elevation = CardDefaults.cardElevation(defaultElevation = 10.dp),
+            colors = CardDefaults.cardColors(containerColor = Color.Black),
+            modifier = Modifier
+                .height(height = 100.dp)
+                .width(width = 300.dp)
+        ) {
+            Column (modifier = Modifier.padding(horizontal = 5.dp, vertical = 15.dp),){
+                Text(text = "Nama   : "+nama, color = Color.White )
+                Text(text = "Gender : "+jenis, color = Color.White )
+                Text(text = "Alamat : "+alamat, color = Color.White )
+            }
+        }
+    }
 }
