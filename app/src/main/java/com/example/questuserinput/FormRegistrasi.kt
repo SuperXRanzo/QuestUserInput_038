@@ -26,8 +26,10 @@ fun FormRegistrasi(modifier: Modifier = Modifier) {
     var rt by remember { mutableStateOf(TextFieldValue("")) }
     var rw by remember { mutableStateOf(TextFieldValue("")) }
     var kota by remember { mutableStateOf(TextFieldValue("")) }
+    var umur by remember { mutableStateOf(TextFieldValue("")) }
     var tanggalLahir by remember { mutableStateOf("") }
     var checked by remember { mutableStateOf(false) }
+    var jenisKelamin by remember { mutableStateOf("Laki-laki") } // default
 
     val context = LocalContext.current
     val calendar = Calendar.getInstance()
@@ -42,19 +44,16 @@ fun FormRegistrasi(modifier: Modifier = Modifier) {
         calendar.get(Calendar.DAY_OF_MONTH)
     )
 
-    // 🔹 Box = latar belakang + isi form
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
-        // 🔹 Background Image
         Image(
-            painter = painterResource(id = R.drawable.bg_form), // ubah sesuai nama file-mu
+            painter = painterResource(id = R.drawable.bg_form),
             contentDescription = null,
             modifier = Modifier.fillMaxSize(),
             contentScale = ContentScale.Crop
         )
 
-        // 🔹 Card form di atas background
         Column(
             modifier = modifier
                 .fillMaxWidth()
@@ -77,13 +76,13 @@ fun FormRegistrasi(modifier: Modifier = Modifier) {
             )
 
             OutlinedTextField(
-                value = alamat,
-                onValueChange = { alamat = it },
-                label = { Text("Alamat") },
+                value = kota,
+                onValueChange = { kota = it },
+                label = { Text("Kota Asal") },
                 modifier = Modifier.fillMaxWidth()
             )
 
-            // Baris Tanggal Lahir + RT + RW
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
@@ -113,11 +112,35 @@ fun FormRegistrasi(modifier: Modifier = Modifier) {
             }
 
             OutlinedTextField(
-                value = kota,
-                onValueChange = { kota = it },
-                label = { Text("Kota Asal") },
+                value = umur,
+                onValueChange = { umur = it },
+                label = { Text("Umur") },
                 modifier = Modifier.fillMaxWidth()
             )
+
+            Column(modifier = Modifier.fillMaxWidth()) {
+                Text(text = "Jenis Kelamin")
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(16.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        RadioButton(
+                            selected = jenisKelamin == "Laki-laki",
+                            onClick = { jenisKelamin = "Laki-laki" }
+                        )
+                        Text("Laki-laki")
+                    }
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        RadioButton(
+                            selected = jenisKelamin == "Perempuan",
+                            onClick = { jenisKelamin = "Perempuan" }
+                        )
+                        Text("Perempuan")
+                    }
+                }
+            }
 
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Checkbox(
