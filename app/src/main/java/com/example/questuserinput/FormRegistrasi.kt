@@ -11,3 +11,4 @@ fun FormRegistrasi(modifier: Modifier = Modifier) {
     var nama by remember { mutableStateOf(TextFieldValue("")) }
     var alamat by remember { mutableStateOf(TextFieldValue("")) }
     var rt by remember { mutableStateOf(TextFieldValue("")) }
+    var rw by remember { mutableStateOf(TextFieldValue("")) }
