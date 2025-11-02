@@ -4,19 +4,11 @@ import android.app.DatePickerDialog
 import android.widget.DatePicker
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -25,7 +17,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
-import java.util.Calendar
+import java.util.*
 
 @Composable
 fun FormRegistrasi(modifier: Modifier = Modifier) {
@@ -50,41 +42,100 @@ fun FormRegistrasi(modifier: Modifier = Modifier) {
         calendar.get(Calendar.DAY_OF_MONTH)
     )
 
+    // 🔹 Box = latar belakang + isi form
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
+        // 🔹 Background Image
         Image(
             painter = painterResource(id = R.drawable.bg_form), // ubah sesuai nama file-mu
             contentDescription = null,
             modifier = Modifier.fillMaxSize(),
             contentScale = ContentScale.Crop
         )
+
+        // 🔹 Card form di atas background
+        Column(
+            modifier = modifier
+                .fillMaxWidth()
+                .padding(20.dp)
+                .background(Color.White.copy(alpha = 0.9f), RoundedCornerShape(16.dp))
+                .padding(20.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                text = "Form Registrasi",
+                style = MaterialTheme.typography.titleLarge
+            )
+
+            OutlinedTextField(
+                value = nama,
+                onValueChange = { nama = it },
+                label = { Text("Nama Lengkap") },
+                modifier = Modifier.fillMaxWidth()
+            )
+
+            OutlinedTextField(
+                value = alamat,
+                onValueChange = { alamat = it },
+                label = { Text("Alamat") },
+                modifier = Modifier.fillMaxWidth()
+            )
+
+            // Baris Tanggal Lahir + RT + RW
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                OutlinedTextField(
+                    value = tanggalLahir,
+                    onValueChange = {},
+                    label = { Text("Tanggal Lahir") },
+                    modifier = Modifier
+                        .weight(1.3f)
+                        .clickable { datePickerDialog.show() },
+                    enabled = false,
+                    readOnly = true
+                )
+                OutlinedTextField(
+                    value = rt,
+                    onValueChange = { rt = it },
+                    label = { Text("RT") },
+                    modifier = Modifier.weight(0.6f)
+                )
+                OutlinedTextField(
+                    value = rw,
+                    onValueChange = { rw = it },
+                    label = { Text("RW") },
+                    modifier = Modifier.weight(0.6f)
+                )
+            }
+
+            OutlinedTextField(
+                value = kota,
+                onValueChange = { kota = it },
+                label = { Text("Kota Asal") },
+                modifier = Modifier.fillMaxWidth()
+            )
+
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Checkbox(
+                    checked = checked,
+                    onCheckedChange = { checked = it }
+                )
+                Text("Saya menyetujui data di atas")
+            }
+
+            Button(
+                onClick = { /* Submit action */ },
+                enabled = checked,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 20.dp)
+            ) {
+                Text("Submit")
+            }
+        }
     }
-
-    Column(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(20.dp)
-            .background(Color.White.copy(alpha = 0.9f), RoundedCornerShape(16.dp))
-            .padding(20.dp),
-        verticalArrangement = Arrangement.spacedBy(12.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Text(
-            text = "Form Registrasi",
-            style = MaterialTheme.typography.titleLarge
-        )
-
-        OutlinedTextField(
-            value = nama,
-            onValueChange = { nama = it },
-            label = { Text("Nama Lengkap") },
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        OutlinedTextField(
-            value = alamat,
-            onValueChange = { alamat = it },
-            label = { Text("Alamat") },
-            modifier = Modifier.fillMaxWidth()
-        )
+}
