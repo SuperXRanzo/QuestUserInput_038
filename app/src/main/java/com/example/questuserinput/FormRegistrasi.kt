@@ -2,6 +2,8 @@ package com.example.questuserinput
 
 import android.app.DatePickerDialog
 import android.widget.DatePicker
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -32,3 +34,7 @@ fun FormRegistrasi(modifier: Modifier = Modifier) {
         calendar.get(Calendar.MONTH),
         calendar.get(Calendar.DAY_OF_MONTH)
     )
+
+    Box(
+        modifier = Modifier.fillMaxSize()
+    ) {
