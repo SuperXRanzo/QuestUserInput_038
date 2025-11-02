@@ -9,3 +9,4 @@ import androidx.compose.ui.text.input.TextFieldValue
 @Composable
 fun FormRegistrasi(modifier: Modifier = Modifier) {
     var nama by remember { mutableStateOf(TextFieldValue("")) }
+    var alamat by remember { mutableStateOf(TextFieldValue("")) }
