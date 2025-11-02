@@ -14,3 +14,4 @@ fun FormRegistrasi(modifier: Modifier = Modifier) {
     var rw by remember { mutableStateOf(TextFieldValue("")) }
     var kota by remember { mutableStateOf(TextFieldValue("")) }
     var tanggalLahir by remember { mutableStateOf("") }
+    var checked by remember { mutableStateOf(false) }
